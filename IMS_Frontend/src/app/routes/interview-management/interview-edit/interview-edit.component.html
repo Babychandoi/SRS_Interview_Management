@@ -1,0 +1,146 @@
+<mat-card>
+  <h1>Interview</h1>
+  <h2><a routerLink="/interviews">Interview List</a>&nbsp; >&nbsp;Edit Interview</h2>
+  <form (ngSubmit)="onSubmit()" #interviewForm="ngForm">
+    <div class="form-container">
+      <div class="form-column">
+        <mat-form-field appearance="fill">
+          <mat-label>Schedule Title</mat-label>
+          <input matInput [(ngModel)]="interview.title" name="title" placeholder="Enter schedule title" required
+            #title="ngModel">
+          <mat-error *ngIf="!title.valid && title.touched">Title is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Candidate Name</mat-label>
+          <mat-select [(ngModel)]="interview.candidateName" name="candidateName"
+            (selectionChange)="onCandidateChange($event.value)" required #candidateName="ngModel">
+            <mat-option *ngFor="let candidate of candidates" [value]="candidate.name">
+              {{ candidate.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="!candidateName.valid && candidateName.touched">Candidate name is required</mat-error>
+        </mat-form-field>
+        <div class="row">
+          <div class="col-6">
+            <mat-form-field appearance="fill">
+              <mat-label>Schedule Date</mat-label>
+              <input matInput [matDatepicker]="picker" [(ngModel)]="interview.scheduleTime" name="scheduleDate"
+                (dateChange)="validateScheduleDate($event.value)" [min]="today" required #scheduleDate="ngModel">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="!scheduleDate.valid && scheduleDate.touched">Schedule date is required</mat-error>
+              <mat-error *ngIf="scheduleDateError">Schedule date must be greater than today</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field appearance="fill">
+              <mat-label>From</mat-label>
+              <input matInput [ngxTimepicker]="timepicker" [(ngModel)]="interview.fromTime" name="fromTime"
+                [format]="24" (ngModelChange)="validateTimes()" required #fromTime="ngModel">
+              <ngx-material-timepicker #timepicker></ngx-material-timepicker>
+              <mat-error *ngIf="!fromTime.valid && fromTime.touched">Start time is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field appearance="fill">
+              <mat-label>To</mat-label>
+              <input matInput [ngxTimepicker]="timepicker2" [(ngModel)]="interview.toTime" name="toTime" [format]="24"
+                (ngModelChange)="validateTimes()" required #toTime="ngModel">
+              <ngx-material-timepicker #timepicker2></ngx-material-timepicker>
+              <mat-error *ngIf="!toTime.valid && toTime.touched">End time is required</mat-error>
+              <mat-error *ngIf="timeError">End time must be greater than start time</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Notes</mat-label>
+            <textarea matInput [(ngModel)]="interview.note" name="notes"
+              placeholder="Enter any additional notes"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-column">
+        <mat-form-field appearance="fill">
+          <mat-label>Job</mat-label>
+          <mat-select [(ngModel)]="selectedJobPosition" name="jobPosition" (selectionChange)="updatePositionLevels()"
+            required #jobPosition="ngModel">
+            <mat-option *ngFor="let title of filteredJobTitles" [value]="title">
+              {{ title }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="!jobPosition.valid && jobPosition.touched">Vị trí công việc là bắt buộc</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Position Level</mat-label>
+          <mat-select [(ngModel)]="PoLevel" name="positionLevel" required #positionLevel="ngModel">
+            <mat-option *ngFor="let position of jobPositions" [value]="position">
+              {{ position }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="!positionLevel.valid && positionLevel.touched">Cấp độ vị trí là bắt buộc</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="fill">
+          <mat-label>Interviewer</mat-label>
+          <mat-select multiple [(ngModel)]="interview.interviewers" name="interviewer" required #interviewer="ngModel">
+            <mat-option *ngFor="let interviewer of interview.userinterviewers" [value]="interviewer">
+              {{ interviewer.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="!interviewer.valid && interviewer.touched">At least one interviewer is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Location</mat-label>
+          <input matInput [(ngModel)]="interview.location" name="location" placeholder="Enter location" required
+            #location="ngModel">
+          <mat-error *ngIf="!location.valid && location.touched">Location is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Recruiter</mat-label>
+          <input matInput [(ngModel)]="interview.recruiter" name="recruiter" placeholder="Enter recruiter" required
+            #recruiter="ngModel">
+          <mat-error *ngIf="!recruiter.valid && recruiter.touched">Recruiter is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Meeting ID</mat-label>
+          <input matInput [(ngModel)]="interview.meetingId" name="meetingId" placeholder="Enter meeting ID" required
+            #meetingId="ngModel">
+          <mat-error *ngIf="!meetingId.valid && meetingId.touched">Meeting ID is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Result</mat-label>
+          <mat-select [(ngModel)]="interview.result" name="result" required #result="ngModel">
+            <mat-option value="PASSED">PASSED</mat-option>
+            <mat-option value="FAILED">FAILED</mat-option>
+          </mat-select>
+          <mat-error *ngIf="!result.valid && result.touched">Result is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="interview.status" name="status" required #status="ngModel">
+            <mat-option value="Scheduled">NEW</mat-option>
+            <mat-option value="INVITED">INVITED</mat-option>
+            <mat-option value="INTERVIEWED">INTERVIEWED</mat-option>
+            <mat-option value="CANCELLED">CANCELLED</mat-option>
+          </mat-select>
+          <mat-error *ngIf="!status.valid && status.touched">Status is required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="button-group">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!interviewForm.form.valid">Submit</button>
+      <button mat-raised-button type="button" (click)="onCancel()">Cancel</button>
+    </div>
+    <mat-error>{{ errorMessage }}</mat-error>
+  </form>
+
+</mat-card>

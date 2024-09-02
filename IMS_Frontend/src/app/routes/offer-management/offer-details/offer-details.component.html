@@ -1,0 +1,104 @@
+<h1>Offer</h1>
+<h2>Offer List > Offer Details</h2>
+
+<mat-card>
+    <mat-card-actions>
+        <!-- If status = "WAITING_APPROVAL" -->
+        <button *ngIf="offer.status == 'WAITING_APPROVAL'" mat-button color="primary"
+            (click)="approveOffer(true)">Approve Offer</button>
+        <button *ngIf="offer.status == 'WAITING_APPROVAL'" mat-button color="warn" (click)="approveOffer(false)">Reject
+            Offer</button>
+
+        <!-- If status = "APPROVED" -->
+        <button *ngIf="offer.status == 'APPROVED'" mat-button color="primary" (click)="markAsSentOffer()">Mark as sent
+            to candidate</button>
+
+        <!-- If status ="WAITING_RESPONSE" -->
+        <button *ngIf="offer.status == 'WAITING_RESPONSE'" mat-button color="primary"
+            (click)="acceptOffer(true)">Candidate Accepted</button>
+        <button *ngIf="offer.status == 'WAITING_RESPONSE'" mat-button color="warn"
+            (click)="acceptOffer(false)">Candidate Declined</button>
+
+        <button *ngIf="(offer.status != 'REJECTED' && offer.status != 'DECLINED' && offer.status != 'CANCELLED' )"
+            mat-button (click)="cancelOffer()">Cancel Offer</button>
+    </mat-card-actions>
+    <mat-card-content>
+        <div class="details">
+            <div class="detail-item">
+                <label>Candidate:</label>
+                <span>{{offer.candidate.fullName}} ({{offer.candidate.email}})</span>
+            </div>
+            <div class="detail-item">
+                <label>Contract Type:</label>
+                <span>{{offer.contractTypeName}}</span>
+            </div>
+            <div class="detail-item">
+                <label>Position:</label>
+                <span>{{offer.positionName}}</span>
+            </div>
+            <div class="detail-item">
+                <label>Level:</label>
+                <span>{{ offer.levelName }}</span>
+            </div>
+            <div class="detail-item">
+                <label>Approver:</label>
+                <span>{{offer.approver.fullName}} ({{offer.approver.email}})</span>
+            </div>
+            <div class="detail-item">
+                <label>Department:</label>
+                <span>{{offer.departmentName}}</span>
+            </div>
+            <div class="detail-item">
+                <label>Interview Info:</label>
+                <div style="float: left;">
+                    <span class="span-inline">Interview &nbsp;</span>
+                    <span class="span-inline">{{ offer.interview.title }}</span>
+                </div>
+                <div style="float: left;">
+                    <span class="span-inline">Interviewer: </span><br />
+                    <span *ngFor="let item of listInterviewers">&nbsp;&nbsp;&nbsp;{{ item }}<br /></span>
+                </div>
+            </div>
+            <div class="detail-item">
+                <label>Recruiter Owner:</label>
+                <span>{{ offer.recruiter.fullName }} ({{offer.recruiter.email}})</span>
+            </div>
+            <div class="detail-item">
+                <label>Contract Period: </label>
+                <div style="float: left;">
+                    <span class="span-inline">From: &nbsp;</span>
+                    <span class="span-inline">{{offer.contractPeriodFrom | date: 'dd-MM-yyyy'}}</span>
+                </div>
+                <div style="float: left;">
+                    <span class="span-inline">To: &nbsp;</span>
+                    <span class="span-inline">{{offer.contractPeriodTo | date: 'dd-MM-yyyy'}}</span>
+                </div>
+            </div>
+            <div class="detail-item">
+                <label>Due Date:</label>
+                <span>{{ offer.dueDate | date: 'dd-MM-yyyy'}}</span>
+            </div>
+            <div class="detail-item">
+                <label>Interview Notes:</label>
+                <span>{{ offer.interview.note ? offer.interview.note : 'N/A' }}</span>
+            </div>
+            <div class="detail-item">
+                <label>Basic Salary:</label>
+                <span>{{ offer.basicSalary | currency: 'USD'}}</span>
+            </div>
+            <div class="detail-item">
+                <label>Status:</label>
+                <span>{{ offer.statusName }}</span>
+            </div>
+            <div class="detail-item">
+                <label>Note:</label>
+                <span>{{ offer.note ? offer.note : 'N/A' }}</span>
+            </div>
+        </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+        <button class="me-1" mat-raised-button color="primary" [routerLink]="['/offers/edit', offer.id]">Edit</button>
+        <button mat-raised-button routerLink="/offers">Cancel</button>
+    </mat-card-actions>
+</mat-card>

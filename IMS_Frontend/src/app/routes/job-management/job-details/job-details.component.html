@@ -1,0 +1,72 @@
+<div class="job-details-container">
+    <div class="breadcrumb">
+        <a routerLink="/jobs">Job List</a> &gt; <span>Job details</span>
+    </div>
+    <div class="job-details">
+        <div class="row">
+            <div class="field">
+                <div class="label">Job title</div>
+                <div class="value">{{ job.title }}</div>
+            </div>
+
+            <div class="field">
+                <div class="label">Skills</div>
+                <div class="value">
+                    <span *ngFor="let skill of job.skills" class="tag">{{ getValue(3,skill) }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="field">
+                <div class="label">Start Date</div>
+                <div class="value">{{ job.startDate | date : "dd/MM/yyyy" }}</div>
+            </div>
+
+            <div class="field">
+                <div class="label">End Date</div>
+                <div class="value">{{ job.endDate | date : "dd/MM/yyyy" }}</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="field">
+                <div class="label">Salary Range</div>
+                <div class="value">
+                    From {{ job.salaryStartRange | number }} USD to
+                    {{ job.salaryEndRange | number }} USD
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="label">Benefits</div>
+                <div class="value">
+                    <span *ngFor="let benefit of job.benefits" class="tag">{{getValue(1,benefit)}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="field">
+                <div class="label">Working address</div>
+                <div class="value">{{ job.workingAddress }}</div>
+            </div>
+            <div class="field">
+                <div class="label">Level</div>
+                <div class="value">
+                    <span *ngFor="let level of job.levels" class="tag">{{getValue(2,level)}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="field">
+                <div class="label">Status</div>
+                <div class="value">{{ job.status }}</div>
+            </div>
+
+            <div class="field">
+                <div class="label">Description</div>
+                <div class="value">{{ job.description || "N/A" }}</div>
+            </div>
+        </div>
+        <!-- <button mat-raised-button color="primary" (click)="cancel()">Cancel</button> -->
+    </div>
+</div>

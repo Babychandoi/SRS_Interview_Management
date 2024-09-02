@@ -1,0 +1,67 @@
+<div *ngIf="interviewDetail" class="interview-detail">
+    <div class="header">
+      <h1>Interview Schedule</h1>
+      <div class="breadcrumb">
+        <a routerLink="/interview-schedule">Interview Schedule List</a>
+      </div>
+    </div>
+  
+    <div class="details">
+      <div class="detail-item">
+        <label>Schedule Title:</label>
+        <span>{{ interviewDetail.title }}</span>
+      </div>
+      <div class="detail-item">
+        <label>Candidate Name:</label>
+        <span>{{ interviewDetail.candidateName }}</span>
+      </div>
+      <div class="detail-item">
+        <label>Schedule Time:</label>
+        <span>{{ interviewDetail.scheduleTime }}</span>
+        <span>From {{ interviewDetail.fromTime }} To {{ interviewDetail.toTime }}</span>
+      </div>
+      <div class="detail-item">
+        <label>Notes:</label>
+        <textarea [(ngModel)]="interviewDetail.note" placeholder="Enter notes here"></textarea>
+      </div>
+      <div class="detail-item">
+        <label>Job:</label>
+        <span>{{ interviewDetail.positionLevel }}</span>
+      </div>
+      <div class="detail-item">
+        <label>Interviewer:</label>
+        <span>{{ formatInterviewers(interviewDetail.interviewers) }}</span>
+      </div>
+      <div class="detail-item">
+        <label>Location:</label>
+        <span>{{ interviewDetail.location }}</span>
+      </div>
+      <div class="detail-item">
+        <label>Recruiter Owner:</label>
+        <span>{{ interviewDetail.recruiter }}</span>
+      </div>
+      <div class="detail-item">
+        <label>Meeting ID:</label>
+        <a [href]="interviewDetail.meetingId" target="_blank">{{ interviewDetail.meetingId }}</a>
+      </div>
+      <div class="detail-item">
+        <label>Result:</label>
+        <mat-form-field>
+          <mat-select [(ngModel)]="interviewDetail.result" (ngModelChange)="onResultChange($event)">
+            <mat-option value="PASSED">PASSED</mat-option>
+            <mat-option value="FAILED">FAILED</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="detail-item">
+        <label>Status:</label>
+        <span>{{ interviewDetail.status }}</span> <!-- Always "INTERVIEWED" -->
+      </div>
+    </div>
+  
+    <div class="actions">
+      <button mat-raised-button color="accent" style="margin-right: 20px;" (click)="sendEmail()">Send Reminder</button>
+      <button mat-raised-button (click)="goBack()">Cancel</button>
+    </div>
+  </div>
+  

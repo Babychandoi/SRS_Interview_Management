@@ -1,0 +1,67 @@
+<div class="interview-detail">
+  <div class="header">
+    <h1>Interview Schedule</h1>
+    <div class="breadcrumb">
+      <a routerLink="/interview-schedule">Interview Schedule List</a> > <span>{{ interviewDetail?.title }}</span>
+    </div>
+  </div>
+
+  <div class="actions-header">
+    <button mat-raised-button color="primary" (click)="sendEmail()">Send Reminder</button>
+  </div>
+
+  <div class="details">
+    <div class="detail-item">
+      <label>Schedule Title:</label>
+      <span>{{ interviewDetail?.title }}</span>
+    </div>
+    <div class="detail-item">
+      <label>Candidate Name:</label>
+      <span>{{ interviewDetail?.candidateName }}</span>
+    </div>
+    <div class="detail-item">
+      <label>Schedule Time:</label>
+      <span>{{ interviewDetail?.scheduleTime }}</span>
+      <span>From {{ interviewDetail?.fromTime }} To {{ interviewDetail?.toTime }}</span>
+    </div>
+    <div class="detail-item">
+      <label>Notes:</label>
+      <span>{{ interviewDetail?.note }}</span>
+    </div>
+    <div class="detail-item">
+      <label>Job:</label>
+      <span>{{ interviewDetail?.positionLevel}}</span>
+    </div>
+    <div class="detail-item">
+      <label>Interviewer:</label>
+      <span>{{ formatInterviewers(interviewDetail?.interviewers) }}</span>
+    </div>
+    <div class="detail-item">
+      <label>Location:</label>
+      <span>{{ interviewDetail?.location }}</span>
+    </div>
+    <div class="detail-item">
+      <label>Recruiter Owner:</label>
+      <span>{{ interviewDetail?.recruiter }}</span>
+    </div>
+    <div class="detail-item">
+      <label>Meeting ID:</label>
+      <a [href]="interviewDetail?.meetingId" target="_blank">{{ interviewDetail?.meetingId }}</a>
+    </div>
+    <div class="detail-item">
+      <label>Result:</label>
+      <span>{{ interviewDetail?.result }}</span>
+    </div>
+    <div class="detail-item">
+      <label>Status:</label>
+      <span>{{ interviewDetail?.status }}</span>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button mat-raised-button
+      *ngIf="(interviewDetail.status !== 'INTERVIEWED' && interviewDetail.status !== 'CANCELLED') && (interviewDetail.result !== 'PASSED' && interviewDetail.result !== 'FAILED')"
+      color="accent" style="margin-right: 20px;" (click)="edit()">Edit</button>
+    <button mat-raised-button (click)="goBack()">Cancel</button>
+  </div>
+</div>

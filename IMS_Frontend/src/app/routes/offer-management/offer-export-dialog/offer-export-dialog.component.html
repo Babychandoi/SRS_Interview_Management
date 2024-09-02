@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Export offer</h1>
+<div mat-dialog-content [formGroup]="exportForm">
+    <mat-form-field appearance="fill" class="me-3">
+        <mat-label>From</mat-label>
+        <input matInput [matDatepicker]="fromPicker" formControlName="from">
+        <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+        <mat-datepicker #fromPicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>To</mat-label>
+        <input matInput [matDatepicker]="toPicker" formControlName="to">
+        <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+        <mat-datepicker #toPicker></mat-datepicker>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions class="d-flex justify-content-center">
+    <button mat-raised-button color="primary" [mat-dialog-close]="true" (click)="onSubmit()">Submit</button>
+    <div style="width: 20px;"></div> <!-- Add a div with a width of 20px to create a gap -->
+    <button mat-button mat-dialog-close>Cancel</button>
+</div>

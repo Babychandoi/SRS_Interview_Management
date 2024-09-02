@@ -1,0 +1,12 @@
+/* Styles specific to the BanCandidateComponent */
+h2 {
+  color: red;
+}
+
+mat-dialog-content {
+  font-size: 16px;
+}
+
+mat-dialog-actions button {
+  margin-right: 10px;
+}

@@ -1,0 +1,90 @@
+.interview-detail {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .header h1 {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .breadcrumb a {
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .breadcrumb a:hover {
+    text-decoration: underline;
+  }
+  
+  .details {
+    margin-bottom: 20px;
+  }
+  
+  .detail-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .detail-item label {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .detail-item span, .detail-item textarea {
+    color: #333;
+    width: 60%;
+  }
+  
+  .detail-item textarea {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .mat-form-field {
+    width: 100%;
+  }
+  
+  .actions {
+    text-align: right;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button[mat-raised-button] {
+    margin-right: 10px;
+  }
+  
+  button[mat-raised-button]:hover {
+    background-color: #0056b3;
+  }
+  
+  button[mat-raised-button]:last-child {
+    background-color: #6c757d;
+  }
+  
+  button[mat-raised-button]:last-child:hover {
+    background-color: #5a6268;
+  }
+  

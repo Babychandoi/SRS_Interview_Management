@@ -1,0 +1,178 @@
+<mat-card>
+    <h1>Job</h1>
+    <h2><a routerLink="/jobs">Job List</a>&nbsp; >&nbsp;{{ jobId ? 'Edit Job' : 'Create Job' }}</h2>
+    <form [formGroup]="jobForm">
+        <div class="form-container">
+            <div class="form-column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Job Title</mat-label>
+                    <input matInput formControlName="title" placeholder="Enter job title" />
+                    <mat-error *ngIf="jobForm.get('title')?.hasError('required')">
+                        Job title is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Skills</mat-label>
+                    <mat-select formControlName="skills" multiple>
+                        <mat-option *ngFor="let skill of skillOptions" [value]="skill.key">{{skill.value}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="jobForm.get('skills')?.hasError('required')">
+                        Skills are required
+                    </mat-error>
+                </mat-form-field>
+                <div class="row">
+                    <div class="col-6">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Start Date</mat-label>
+                            <input matInput [matDatepicker]="startDatePicker" formControlName="startDate"
+                                placeholder="dd/MM/yyyy" />
+                            <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #startDatePicker></mat-datepicker>
+                            <mat-error *ngIf="jobForm.get('startDate')?.hasError('required')">
+                                Start date is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-6">
+                        <mat-form-field appearance="fill">
+                            <mat-label>End Date</mat-label>
+                            <input matInput [matDatepicker]="endDatePicker" formControlName="endDate"
+                                placeholder="dd/MM/yyyy" />
+                            <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #endDatePicker></mat-datepicker>
+                            <mat-error *ngIf="jobForm.get('endDate')?.hasError('required')">
+                                End date is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Working Address</mat-label>
+                    <input matInput formControlName="workingAddress" placeholder="Enter working address" />
+                    <mat-error *ngIf="jobForm.get('workingAddress')?.hasError('required')">
+                        Working address is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Salary Range From</mat-label>
+                    <input matInput formControlName="salaryStartRange" type="text" placeholder="Enter starting salary"
+                        currencyMask />
+                    <mat-error *ngIf="jobForm.get('salaryStartRange')?.hasError('required')">
+                        Starting salary is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Salary Range To</mat-label>
+                    <input matInput formControlName="salaryEndRange" type="text" placeholder="Enter ending salary"
+                        currencyMask />
+                    <mat-error *ngIf="jobForm.get('salaryEndRange')?.hasError('required')">
+                        Ending salary is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Benefits</mat-label>
+                    <mat-select formControlName="benefits" multiple>
+                        <mat-option *ngFor="let benefit of benefitOptions"
+                            [value]="benefit.key">{{benefit.value}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="jobForm.get('benefits')?.hasError('required')">
+                        Benefits are required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Levels</mat-label>
+                    <mat-select formControlName="levels" multiple>
+                        <mat-option *ngFor="let level of levelOptions" [value]="level.key">{{level.value}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="jobForm.get('levels')?.hasError('required')">
+                        Levels are required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput formControlName="description" placeholder="Enter job description"
+                        rows="3"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="button-group">
+            <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+            <button mat-raised-button (click)="cancel()">Cancel</button>
+        </div>
+    </form>
+</mat-card>
+
+
+<!-- <div class="job-create">
+    <div class="header">
+        <h1>Create Job</h1>
+        <div class="breadcrumb">
+            <a routerLink="/jobs">Job List</a> > <span>Create Job</span>
+        </div>
+    </div>
+
+    <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="jobTitle">Job Title:</label>
+            <input id="jobTitle" formControlName="title" type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="skills">Skills:</label>
+            <select id="skills" formControlName="skills" multiple>
+                <option *ngFor="let skill of skillOptions" [value]="skill.key">{{skill.value}}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="startDate">Start Date:</label>
+            <input id="startDate" formControlName="startDate" type="date" />
+        </div>
+
+        <div class="form-group">
+            <label for="endDate">End Date:</label>
+            <input id="endDate" formControlName="endDate" type="date" />
+        </div>
+
+        <div class="form-group">
+            <label for="salaryFrom">Salary Range From:</label>
+            <input id="salaryFrom" formControlName="salaryStartRange" type="number" />
+        </div>
+
+        <div class="form-group">
+            <label for="salaryTo">Salary Range To:</label>
+            <input id="salaryTo" formControlName="salaryEndRange" type="number" />
+        </div>
+
+        <div class="form-group">
+            <label for="workingAddress">Working Address:</label>
+            <input id="workingAddress" formControlName="workingAddress" type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="benefits">Benefits:</label>
+            <select id="benefits" formControlName="benefits" multiple>
+                <option *ngFor="let benefit of benefitOptions" [value]="benefit.key">{{ benefit.value }}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="levels">Levels:</label>
+            <select id="levels" formControlName="levels" multiple>
+                <option *ngFor="let level of levelOptions" [value]="level.key">{{ level.value }}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" formControlName="description" maxlength="500"></textarea>
+        </div>
+
+        <div class="actions">
+            <button type="submit" mat-raised-button color="primary">Submit</button>
+            <button type="button" mat-raised-button (click)="cancel()">Cancel</button>
+        </div>
+    </form>
+</div> -->

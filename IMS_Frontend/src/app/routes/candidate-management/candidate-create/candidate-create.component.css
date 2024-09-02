@@ -1,0 +1,128 @@
+.candidate-create {
+    max-width: 100%; /* Allow form to expand to full width */
+    margin: 0 auto; /* Center the form horizontally */
+    padding: 20px; /* Reduced padding for a more compact look */
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h2 {
+    margin-bottom: 24px;
+    font-size: 28px;
+    color: #333333;
+    font-weight: 600;
+}
+
+.breadcrumb {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #6c757d;
+}
+
+.breadcrumb a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.form-section {
+    margin-bottom: 30px;
+}
+
+h3 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #555555;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+    font-weight: 500;
+}
+
+.form-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    gap: 20px; /* Spacing between columns */
+}
+
+.form-column {
+    flex: 1 1 calc(50% - 20px); /* Take up 50% of the width minus gap */
+    box-sizing: border-box;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type="file"] {
+    border: none;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.form-actions {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.form-actions button {
+    background-color: #673ab7; /* Màu tím nhạt cho nút Submit */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .form-actions button[type="button"] {
+    background-color: #d0d0d0; /* Màu xám cho nút Cancel */
+  }
+  
+  .form-actions button:hover {
+    opacity: 0.9; /* Hiệu ứng khi di chuột qua nút */
+  }
+
+.error-message {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 5px;
+}
+/* candidate-edit.component.css */
+.job-titles {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .job-title {
+    display: inline;
+  }
+  
+  

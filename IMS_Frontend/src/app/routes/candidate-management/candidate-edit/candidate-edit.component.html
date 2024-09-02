@@ -1,0 +1,175 @@
+<div class="candidate-edit">
+  <h2>Edit Candidate</h2>
+  <div class="breadcrumb">
+    <a routerLink="/candidates">Candidate List</a> > Edit candidate
+  </div>
+
+  <form [formGroup]="candidateForm" (ngSubmit)="onSubmit()">
+    <div class="form-section">
+      <h3>I. Personal Information</h3>
+      <div class="form-container">
+        <div class="form-column">
+          <div class="form-group">
+            <label for="fullName">Full Name *</label>
+            <input id="fullName" formControlName="fullName" type="text" placeholder="Type a name...">
+            <div *ngIf="candidateForm.get('fullName')?.invalid && candidateForm.get('fullName')?.touched" class="error-message">
+              Full name is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="dob">D.O.B *</label>
+            <input id="dob" formControlName="dob" type="date" placeholder="DD/MM/YYYY">
+            <div *ngIf="candidateForm.get('dob')?.hasError('pastDate') && candidateForm.get('dob')?.touched" class="error-message">
+              Date of Birth must be in the past.
+            </div>  
+          </div>
+          <div class="form-group">
+            <label for="phoneNumber">Phone Number *</label>
+            <input id="phoneNumber" formControlName="phoneNumber" type="text" placeholder="Type a number...">
+            <div *ngIf="candidateForm.get('phoneNumber')?.invalid && candidateForm.get('phoneNumber')?.touched" class="error-message">
+              Phone number is required.
+            </div>
+            <div *ngIf="candidateForm.get('phoneNumber')?.hasError('pattern') && candidateForm.get('phoneNumber')?.touched" class="error-message">
+              Phone number must be 10 digits.
+            </div>
+            </div>
+        </div>
+        <div class="form-column">
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input id="email" formControlName="email" type="email" placeholder="Type an email...">
+            <div *ngIf="candidateForm.get('email')?.invalid && candidateForm.get('email')?.touched" class="error-message">
+              Email is required.
+            </div>
+            <div *ngIf="candidateForm.get('email')?.hasError('email') && candidateForm.get('email')?.touched" class="error-message">
+              Invalid email format.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="address">Address *</label>
+            <input id="address" formControlName="address" type="text" placeholder="Type an address...">
+            <div *ngIf="candidateForm.get('address')?.invalid && candidateForm.get('address')?.touched" class="error-message">
+              Address is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="gender">Gender *</label>
+            <select id="gender" formControlName="gender">
+              <option value="">Select a gender</option>
+              <option value="OTHERS">Others</option>
+              <option value="MALE">Male</option>
+              <option value="FEMALE">Female</option>
+            </select>
+            <div *ngIf="candidateForm.get('gender')?.invalid && candidateForm.get('gender')?.touched" class="error-message">
+              Gender is required.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>II. Professional Information</h3>
+      <div class="form-container">
+        <div class="form-column">
+          <div class="form-group">
+            <label for="cvUrl">CV File</label>
+            <a *ngIf="cvUrl" [href]="cvUrl" target="_blank">
+              View CV
+            </a>
+          </div>
+          <div class="form-group">
+            <label for="fileUpload">Upload New CV</label>
+            <input id="fileUpload" type="file" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx" />
+          </div>
+          <div class="form-group">
+            <label for="position">Position *</label>
+            <select id="position" formControlName="position" required>
+              <option value="">Select a position...</option>
+              <option value="BACKEND_DEVELOPER">BACKEND DEVELOPER</option>
+              <option value="FRONTEND_DEVELOPER">FRONTEND DEVELOPER</option>
+              <option value="BUSINESS_ANALYST">BUSINESS ANALYST</option>
+              <option value="TESTER">TESTER</option>
+              <option value="HR">HR</option>
+              <option value="PROJECT_MANAGER">PROJECT MANAGER</option>
+              <option value="NOT_AVAILABLE">NOT AVAILABLE</option>
+            </select>
+            <div *ngIf="candidateForm.get('position')?.invalid && candidateForm.get('position')?.touched" class="error-message">
+              Position is required.
+            </div>  
+          </div>
+          <div class="form-group">
+            <label for="skills">Skills *</label>
+            <div formArrayName="skills">
+              <div *ngFor="let skill of skillsFormArray.controls; let i = index">
+                <input type="checkbox" [formControlName]="i" /> {{ skillOptions[i] }}
+              </div>
+            </div>
+            <div *ngIf="candidateForm.get('skills')?.hasError('atLeastOneSkill') && candidateForm.get('skills')?.touched" class="error-message">
+              At least one skill must be selected.
+            </div>
+          </div>
+          <!-- <div class="form-group">
+            <label for="job">Job Titles</label>
+            <div formArrayName="job">
+              <div *ngFor="let job of jobFormArray.controls; let i = index">
+                <div [formGroupName]="i">
+                  <input type="text" formControlName="title" readonly />
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+        <div class="form-column">
+          <div class="form-group">
+            <label for="recruiterName">Recruiter</label>
+            <select id="recruiterName" formControlName="recruiter">
+              <option *ngFor="let recruiter of recruiters" [value]="recruiter.fullName">{{ recruiter.fullName }}</option>
+            </select>
+            <div *ngIf="candidateForm.get('recruiter')?.invalid && candidateForm.get('recruiter')?.touched" class="error-message">
+              Recruiter is required.
+            </div>  
+          </div>
+          <div class="form-group">
+            <label for="note">Note</label>
+            <input id="note" formControlName="note" type="text" placeholder="N/A">
+            <div *ngIf="candidateForm.get('note')?.invalid && candidateForm.get('note')?.touched" class="error-message">
+              Note is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="status">Status</label>
+            <p>{{ candidateForm.get('status')?.value }}</p>
+          </div>
+          <div class="form-group">
+            <label for="yearOfExperience">Year of Experience *</label>
+            <input id="yearOfExperience" formControlName="yearOfExperience" type="number" placeholder="Type a number..." required>
+            <div *ngIf="candidateForm.get('yearOfExperience')?.invalid && candidateForm.get('yearOfExperience')?.touched" class="error-message">
+              Year of Experience is required.
+            </div>
+            <div *ngIf="candidateForm.get('yearOfExperience')?.hasError('min') && candidateForm.get('yearOfExperience')?.touched" class="error-message">
+              Year of Experience cannot be negative.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="highestLevel">Highest Level *</label>
+            <select id="highestLevel" formControlName="highestLevel" required>
+              <option value="">Select highest level...</option>
+              <option value="HIGH_SCHOOL">HIGH SCHOOL</option>
+              <option value="BACHELOR">BACHELOR</option>
+              <option value="MASTER">MASTER</option>
+            </select>
+            <div *ngIf="candidateForm.get('highestLevel')?.invalid && candidateForm.get('highestLevel')?.touched" class="error-message">
+              Highest Level is required.
+            </div>  
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit">Submit</button>
+      <button type="button" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

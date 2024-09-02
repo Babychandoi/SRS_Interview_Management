@@ -1,0 +1,22 @@
+<mat-toolbar class="mat-elevation-z3">
+    <button mat-button (click)="toggleSidebarBtn()">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <div *ngIf="fullName" class="user-dropdown">
+        <button mat-button [matMenuTriggerFor]="userMenu">
+            <span>Hello, {{ fullName }}</span>
+            <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>
+        </button>
+        <mat-menu #userMenu="matMenu">
+            <button mat-menu-item (click)="editProfile()">
+                <span>Edit profile</span>
+                <mat-icon>account_box</mat-icon>
+            </button>
+            <button mat-menu-item (click)="logout()">
+                <span>Log out</span>
+                <mat-icon>logout</mat-icon>
+            </button>
+        </mat-menu>
+    </div>
+</mat-toolbar>

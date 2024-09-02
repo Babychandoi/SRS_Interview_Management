@@ -1,0 +1,92 @@
+<div class="candidate-info-container">
+    <div class="header">
+        <h2>Candidate Information</h2>
+        <button class="btn btn-danger" (click)="openBanDialog()">Ban Candidate</button>
+    </div>
+
+    <div class="breadcrumb">
+        <a routerLink="/candidates">Candidate List</a> &gt; Candidate Information
+    </div>
+
+    <div class="information-sections" *ngIf="candidate">
+        <mat-card>
+            <mat-card-content>
+                <div class="details">
+                    <div class="section">
+                        <h3>I. Personal information</h3>
+                        <div class="detail-item">
+                            <label>Full name:</label>
+                            <span>{{candidate.fullName}}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>D.O.B:</label>
+                            <span>{{candidate.dob | date}}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Phone number:</label>
+                            <span>{{candidate.phoneNumber}}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Email:</label>
+                            <span>{{candidate.email}}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Address:</label>
+                            <span>{{candidate.address}}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Gender:</label>
+                            <span>{{candidate.gender}}</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>II. Professional information</h3>
+                        <div class="detail-item">
+                            <label>CV attachment:</label>
+                            <span>
+                                <a [href]="candidate.cvUrl" target="_blank">CV</a>
+                            </span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Current Position:</label>
+                            <span>{{candidate.position}}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Skills:</label>
+                            <span *ngFor="let skill of candidate.skills">{{skill}}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Jobs:</label>
+                            <span *ngFor="let job of candidate.job">{{job.title}}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Recruiter:</label>
+                            <span>{{candidate.recruiterName}}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Status:</label>
+                            <span>{{candidate.status}}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Year of Experience:</label>
+                            <span>{{candidate.yearOfExperience}}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Highest level:</label>
+                            <span>{{candidate.highestLevel}}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Note:</label>
+                            <span>{{candidate.note}}</span>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary" (click)="editCandidate()">Edit</button>
+                <button mat-button color="warn" (click)="cancel()">Cancel</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

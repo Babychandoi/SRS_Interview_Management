@@ -1,0 +1,107 @@
+<h1>Offer</h1>
+<h2>Offer List</h2>
+<div class="d-flex flex-row bd-highlight mb-3">
+    <div class="col-3 mr-3-custom">
+        <mat-form-field>
+            <mat-label>Search</mat-label>
+            <input matInput name="keyword" [(ngModel)]="query.keyword">
+        </mat-form-field>
+    </div>
+    <div class="col-3 mr-3-custom">
+        <mat-form-field>
+            <mat-label>Department</mat-label>
+            <mat-select [(ngModel)]="query.department">
+                <mat-option *ngFor="let item of departments" [value]="item?.key">{{item?.value}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="mr-5-custom">
+        <mat-form-field>
+            <mat-label>Status</mat-label>
+            <mat-select [(ngModel)]="query.status">
+                <mat-option *ngFor="let item of statuses" [value]="item?.key">{{item?.value}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="mr-3-custom">
+        <button mat-raised-button color="primary" (click)="search()">
+            Search
+        </button>
+    </div>
+    <div class="mr-3-custom">
+        <button mat-raised-button (click)="clearSearch()">
+            Reset
+        </button>
+    </div>
+    <div class="mr-3-custom">
+        <button mat-raised-button routerLink="/offers/create">
+            Add new
+        </button>
+    </div>
+    <div class="mr-3-custom">
+        <button mat-raised-button (click)="export()">
+            Export
+        </button>
+    </div>
+</div>
+
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+
+        <!-- Candidate Name Column -->
+        <ng-container matColumnDef="candidateName">
+            <th mat-header-cell *matHeaderCellDef> Candidate Name </th>
+            <td mat-cell *matCellDef="let offer"> {{offer.candidateName}} </td>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let offer"> {{offer.email}} </td>
+        </ng-container>
+
+        <!-- Approver Column -->
+        <ng-container matColumnDef="approver">
+            <th mat-header-cell *matHeaderCellDef> Approver </th>
+            <td mat-cell *matCellDef="let offer"> {{offer.approver}} </td>
+        </ng-container>
+
+        <!-- Department Column -->
+        <ng-container matColumnDef="department">
+            <th mat-header-cell *matHeaderCellDef> Department </th>
+            <td mat-cell *matCellDef="let offer"> {{offer.department}} </td>
+        </ng-container>
+
+        <!-- Notes Column -->
+        <ng-container matColumnDef="notes">
+            <th mat-header-cell *matHeaderCellDef> Notes </th>
+            <td mat-cell *matCellDef="let offer"> {{offer.note}} </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let offer"> {{offer.status}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let offer">
+                <button mat-icon-button [routerLink]="['/offers', offer.id]">
+                    <mat-icon>visibility</mat-icon>
+                </button>
+                <button mat-icon-button [routerLink]="['/offers/edit', offer.id]">
+                    <mat-icon>edit square</mat-icon>
+                </button>
+
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator (page)="pageChangeEvent($event)" #paginator [pageSize]="pageSize" [pageIndex]="pageIndex"
+        [length]="length" [hidePageSize]="true" showFirstLastButtons aria-label="Select page">
+    </mat-paginator>
+</div>

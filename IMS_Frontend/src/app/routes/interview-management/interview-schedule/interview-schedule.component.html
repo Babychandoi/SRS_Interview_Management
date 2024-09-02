@@ -1,0 +1,109 @@
+<h1>Interview</h1>
+<h2>Interview List</h2>
+<div class="d-flex flex-row bd-highlight mb-3">
+      <div class="col-3 mr-3-custom">
+            <mat-form-field>
+                  <mat-label>Search</mat-label>
+                  <input matInput name="keyword" [(ngModel)]="query.keyword">
+            </mat-form-field>
+      </div>
+      <div class="col-3 mr-3-custom">
+            <mat-form-field>
+                  <mat-label>Interviewer</mat-label>
+                  <mat-select [(ngModel)]="query.interviewerId">
+                        <mat-option *ngFor="let item of interviewers" [value]="item.id">{{item.fullName}}</mat-option>
+                  </mat-select>
+            </mat-form-field>
+      </div>
+      <div class="mr-5-custom">
+            <mat-form-field>
+                  <mat-label>Status</mat-label>
+                  <mat-select [(ngModel)]="query.status">
+                        <mat-option *ngFor="let item of statuses" [value]="item?.key">{{item?.value}}</mat-option>
+                  </mat-select>
+            </mat-form-field>
+      </div>
+      <div class="mr-3-custom">
+            <button mat-raised-button color="primary" (click)="search()">
+                  Search
+            </button>
+      </div>
+      <div class="mr-3-custom">
+            <button mat-raised-button (click)="clearSearch()">
+                  Reset
+            </button>
+      </div>
+      <div class="mr-3-custom">
+            <button mat-raised-button *ngIf="(parsedData.role !== 'ROLE_INTERVIEWER' )" routerLink="/interviews/create" >
+                  Add new
+            </button>
+      </div>
+</div>
+
+<div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource">
+
+            <!-- Candidate Name Column -->
+            <ng-container matColumnDef="title">
+                  <th mat-header-cell *matHeaderCellDef> Title </th>
+                  <td mat-cell *matCellDef="let interview"> {{interview.title}} </td>
+            </ng-container>
+
+            <!-- Email Column -->
+            <ng-container matColumnDef="candidateName">
+                  <th mat-header-cell *matHeaderCellDef> Candidate Name </th>
+                  <td mat-cell *matCellDef="let interview"> {{interview.candidateName}} </td>
+            </ng-container>
+
+            <!-- Approver Column -->
+            <ng-container matColumnDef="interviewers">
+                  <th mat-header-cell *matHeaderCellDef> Interviewers </th>
+                  <td mat-cell *matCellDef="let interview"> {{formatInterviewers(interview.interviewers)}} </td>
+            </ng-container>
+
+            <!-- Department Column -->
+            <ng-container matColumnDef="schedule">
+                  <th mat-header-cell *matHeaderCellDef> Schedule </th>
+                  <td mat-cell *matCellDef="let interview"> {{ formatSchedule(interview) }} </td>
+            </ng-container>
+
+            <!-- Notes Column -->
+            <ng-container matColumnDef="result">
+                  <th mat-header-cell *matHeaderCellDef> Result </th>
+                  <td mat-cell *matCellDef="let interview"> {{interview.result}} </td>
+            </ng-container>
+
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef> Status </th>
+                  <td mat-cell *matCellDef="let interview"> {{interview.status}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="job">
+                  <th mat-header-cell *matHeaderCellDef> Job </th>
+                  <td mat-cell *matCellDef="let interview"> {{interview.job.title}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef> Action </th>
+                  <td mat-cell *matCellDef="let interview">
+                        <button mat-icon-button [routerLink]="['/interviews', interview.id]">
+                              <mat-icon>visibility</mat-icon>
+                        </button>
+                        <button mat-icon-button *ngIf="(interview.status !== 'INTERVIEWED' && interview.status !== 'CANCELLED') && (interview.result !== 'PASSED' && interview.result !== 'FAILED') && (parsedData.role !== 'ROLE_INTERVIEWER')" mat-icon-button [routerLink]="['/interviews/edit', interview.id]">
+                              <mat-icon>edit square</mat-icon>
+                        </button>
+                        <button mat-icon-button *ngIf=" (parsedData.role !== 'ROLE_MANAGER') && (parsedData.role !== 'ROLE_ADMIN')&& (parsedData.role !== 'ROLE_RECRUITER') && (interview.result !== 'PASSED' && interview.result !== 'FAILED') " mat-icon-button [routerLink]="['/interviews/send', interview.id]">
+                              <mat-icon>send</mat-icon>
+                        </button>
+                  </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator (page)="pageChangeEvent($event)" #paginator [pageSize]="pageSize" [pageIndex]="pageIndex"
+            [length]="length" [hidePageSize]="true" showFirstLastButtons aria-label="Select page">
+      </mat-paginator>
+</div>

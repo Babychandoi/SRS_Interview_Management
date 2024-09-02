@@ -1,0 +1,114 @@
+/* .job-create {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.breadcrumb {
+    font-size: 14px;
+    color: #777;
+}
+
+.breadcrumb a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.breadcrumb span {
+    margin-left: 5px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-group textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.actions button {
+    margin-left: 10px;
+}
+
+
+.date {
+    display: flex;
+    gap: 5px;
+
+    span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        mat-icon {
+            font-size: 25px;
+        }
+    }
+} */
+mat-card {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.form-container {
+    display: flex;
+    gap: 150px;
+}
+
+.form-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+textarea {
+    resize: none;
+}

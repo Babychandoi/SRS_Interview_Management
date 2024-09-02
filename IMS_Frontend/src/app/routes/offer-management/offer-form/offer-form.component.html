@@ -1,0 +1,171 @@
+<mat-card>
+    <h1>Offer</h1>
+    <h2><a routerLink="/offers">Offer List</a>&nbsp; >&nbsp;{{ offerId ? 'Edit Offer' : 'Create Offer' }}</h2>
+    <form [formGroup]="offerForm">
+        <div class="form-container">
+            <div class="form-column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Candidate</mat-label>
+                    <mat-select formControlName="candidate" #singleSelect [formControl]="candidateCtrl">
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="candidateFilterCtrl"
+                                placeholderLabel="Search for Candidate"
+                                noEntriesFoundLabel="Candidate not found!"></ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let candidate of filteredCandidates | async"
+                            [value]="candidate?.id">{{candidate?.fullName}}
+                            ({{candidate?.email}})</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="offerForm.get('candidate')?.hasError('required')">
+                        Candidate is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Interview Info</mat-label>
+                    <mat-select formControlName="interview">
+                        <mat-option *ngFor="let interview of interviewInfos" [value]="interview?.id"
+                            [disabled]="interview.result != 'PASSED'">{{interview?.title}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="!offerForm.get('candidate')?.value">
+                        Must choose candidate first
+                    </mat-error>
+                    <mat-error
+                        *ngIf="offerForm.get('candidate')?.value && offerForm.get('interview')?.hasError('required')">
+                        Interview is required
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Position</mat-label>
+                    <mat-select formControlName="position" required>
+                        <mat-option *ngFor="let position of positions"
+                            [value]="position.key">{{position.value}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="offerForm.get('position')?.hasError('required')">
+                        Position is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Approver</mat-label>
+                    <mat-select formControlName="approver">
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="approverFilterCtrl"
+                                placeholderLabel="Search for Approver"
+                                noEntriesFoundLabel="User not found!"></ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let approver of filteredApprovers | async"
+                            [value]="approver.id">{{approver.fullName}}
+                            ({{approver.email}})</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="flex">
+                    <div class="label me-5">
+                        <label>Contract Period:</label>
+                    </div>
+                    <mat-form-field appearance="fill" class="col-4 me-5">
+                        <mat-label>From</mat-label>
+                        <input matInput [matDatepicker]="picker1" formControlName="contractPeriodFrom" [min]="minDate">
+                        <mat-hint>dd/MM/yyyy</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                        <mat-error *ngIf="offerForm.get('contractPeriodFrom')?.hasError('required')">
+                            Contract period from date is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="col-4">
+                        <mat-label>To</mat-label>
+                        <input matInput [matDatepicker]="picker2" formControlName="contractPeriodTo" [min]="minDate">
+                        <mat-hint>dd/MM/yyyy</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                        <mat-error *ngIf="offerForm.get('contractPeriodTo')?.hasError('required')">
+                            Contract period to date is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Interview Notes</mat-label>
+                    <textarea matInput placeholder="Interview Notes" rows="6" [value]="selectedInterview.note || 'N/A'"
+                        disabled readonly></textarea>
+                </mat-form-field>
+            </div>
+            <div class="form-column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Contract Type</mat-label>
+                    <mat-select formControlName="contractType">
+                        <mat-option *ngFor="let type of contractTypes" [value]="type.key">{{type.value}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="offerForm.get('contractType')?.hasError('required')">
+                        Contract type is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Level</mat-label>
+                    <mat-select formControlName="level">
+                        <mat-option *ngFor="let level of levels" [value]="level.key">{{level.value}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="offerForm.get('level')?.hasError('required')">
+                        Level is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Department</mat-label>
+                    <mat-select formControlName="department" placeholder="Choose one">
+                        <mat-option *ngFor="let department of departments"
+                            [value]="department.key">{{department.value}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="offerForm.get('department')?.hasError('required')">
+                        Department is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Recruiter Owner</mat-label>
+                    <mat-select formControlName="recruiter">
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="recruiterFilterCtrl"
+                                placeholderLabel="Search for Recruiter"
+                                noEntriesFoundLabel="User not found!"></ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let owner of filteredRecruiters | async"
+                            [value]="owner.id">{{owner.fullName}}
+                            ({{owner.email}})</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <a class="anchor" href="#">Assign to me</a>
+                <mat-form-field appearance="fill">
+                    <mat-label>Due Date</mat-label>
+                    <input matInput placeholder="dd/MM/yyyy" [matDatepicker]="picker3" formControlName="dueDate"
+                        [min]="minDate">
+                    <mat-hint>dd/MM/yyyy</mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                    <mat-error *ngIf="offerForm?.get('dueDate')?.hasError('required')">
+                        Due date is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Basic Salary</mat-label>
+                    <input matInput currencyMask type="text" formControlName="basicSalary"
+                        placeholder="Enter basic salary">
+                    <mat-error *ngIf="offerForm.get('basicSalary')?.hasError('required')">
+                        Basic salary is required
+                    </mat-error>
+                    <mat-error *ngIf="offerForm.get('basicSalary')?.hasError('min')">
+                        Basic salary must be a positive number
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Note</mat-label>
+                    <textarea matInput formControlName="note" placeholder="Type a note" rows="3"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+        <input type="hidden" formControlName="status">
+        <input type="hidden" formControlName="createdAt">
+        <input type="hidden" formControlName="lastUpdateBy">
+        <div class="button-group">
+            <button mat-raised-button color="primary" (click)="saveOffer()">Submit</button>
+            <button mat-raised-button (click)="cancel()">Cancel</button>
+        </div>
+    </form>
+</mat-card>

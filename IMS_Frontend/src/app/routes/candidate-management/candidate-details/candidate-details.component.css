@@ -1,0 +1,62 @@
+/* Global styles */
+.candidate-info-container {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.breadcrumb {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.breadcrumb a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.breadcrumb span {
+  margin-left: 5px;
+}
+
+/* Styles for the candidate information sections */
+.information-sections {
+  margin-top: 20px;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.detail-item label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.span-inline {
+  display: inline;
+}

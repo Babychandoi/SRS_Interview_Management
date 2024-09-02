@@ -1,0 +1,11 @@
+<app-navbar></app-navbar>
+<mat-sidenav-container>
+    <mat-sidenav opened mode="side" [style.width]="toggleSidebar()">
+        <app-sidebar></app-sidebar>
+    </mat-sidenav>
+    <mat-sidenav-content class="content" [style.margin-left]="toggleSidebar()">
+        <div class="matero-content">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
